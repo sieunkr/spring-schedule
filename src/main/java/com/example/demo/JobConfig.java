@@ -10,9 +10,11 @@ import java.util.UUID;
 @Configuration
 public class JobConfig {
 
+    private final static String JOB_KEY = "sampleJobA";
+
     @Bean
     public JobDetail jobADetails() {
-        return JobBuilder.newJob(JobOne.class).withIdentity("sampleJobA")
+        return JobBuilder.newJob(JobOne.class).withIdentity(JOB_KEY)
                 .storeDurably().build();
     }
 
@@ -20,7 +22,6 @@ public class JobConfig {
     public Trigger jobATrigger(JobDetail jobADetails) {
 
         return TriggerBuilder.newTrigger().forJob(jobADetails)
-
                 .withIdentity("TriggerA")
                 .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * ? * * *"))
                 .build();
